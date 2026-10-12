@@ -1,0 +1,662 @@
+<!-- Sterling iT new customer handover questionnaire. Paste this whole block into a Custom HTML block. -->
+<div id="sit-handover"></div>
+<style>
+#sit-handover { --sit-brand: #1f4e79; --sit-brand-dark: #163a5a; --sit-soft: #e8f0f8; --sit-text: #1a1f24; --sit-muted: #5b6670; --sit-border: #d4dbe2; --sit-ok: #1d7a46; --sit-warn: #8a4b00; --sit-danger: #b42318; color: var(--sit-text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 16px; line-height: 1.45; text-align: left; max-width: 1200px; margin: 0 auto; }
+#sit-handover *, #sit-handover *::before, #sit-handover *::after { box-sizing: border-box; }
+#sit-handover h2 { font-size: 1.5rem; margin: 0 0 4px; color: var(--sit-text); line-height: 1.25; }
+#sit-handover button, #sit-handover input, #sit-handover select, #sit-handover textarea { font: inherit; color: inherit; letter-spacing: normal; text-transform: none; box-shadow: none; }
+#sit-handover .sit-hidden { display: none !important; }
+#sit-handover .sit-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+#sit-handover .sit-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 0 14px; }
+#sit-handover .sit-spacer { flex: 1; }
+#sit-handover .sit-status { font-size: 0.85rem; color: var(--sit-muted); }
+#sit-handover .sit-status-err { color: var(--sit-danger); }
+#sit-handover .sit-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 24px; }
+#sit-handover .sit-nav { position: sticky; top: 20px; align-self: start; }
+#sit-handover .sit-nav ol { list-style: none; margin: 0; padding: 0; }
+#sit-handover .sit-nav li { margin: 0; padding: 0; }
+#sit-handover .sit-nav li::before { content: none; }
+#sit-handover .sit-nav button { width: 100%; text-align: left; border: 0; background: none; padding: 7px 10px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; color: var(--sit-text); font-size: 0.95rem; font-weight: 400; line-height: 1.3; min-height: 0; }
+#sit-handover .sit-nav button:hover { background: var(--sit-soft); }
+#sit-handover .sit-nav button[aria-current="step"] { background: var(--sit-brand); color: #fff; }
+#sit-handover .sit-count { font-size: 0.8rem; opacity: 0.7; white-space: nowrap; }
+#sit-handover .sit-progress { height: 6px; background: var(--sit-border); border-radius: 3px; margin: 0 10px 12px; overflow: hidden; }
+#sit-handover .sit-progress > div { height: 100%; width: 0; background: var(--sit-ok); transition: width 0.3s; }
+#sit-handover .sit-card { background: #fff; border: 1px solid var(--sit-border); border-radius: 8px; padding: 24px 28px; min-width: 0; }
+#sit-handover .sit-intro { color: var(--sit-muted); margin: 0 0 20px; }
+#sit-handover .sit-field { margin: 0 0 18px; }
+#sit-handover .sit-label { display: block; font-weight: 600; margin: 0 0 6px; }
+#sit-handover .sit-help { color: var(--sit-muted); font-size: 0.88rem; margin: -2px 0 8px; }
+#sit-handover .sit-req { color: var(--sit-danger); margin-left: 2px; }
+#sit-handover input[type=text], #sit-handover input[type=email], #sit-handover input[type=tel], #sit-handover input[type=url], #sit-handover input[type=number], #sit-handover input[type=date], #sit-handover input[type=password], #sit-handover select, #sit-handover textarea { display: block; width: 100%; max-width: none; margin: 0; border: 1px solid var(--sit-border); border-radius: 6px; padding: 8px 10px; background: #fff; height: auto; min-height: 40px; }
+#sit-handover textarea { min-height: 80px; resize: vertical; }
+#sit-handover input:focus, #sit-handover select:focus, #sit-handover textarea:focus { outline: 2px solid var(--sit-brand); border-color: var(--sit-brand); }
+#sit-handover .sit-invalid input, #sit-handover .sit-invalid textarea, #sit-handover .sit-invalid .sit-choices { outline: 2px solid var(--sit-danger); }
+#sit-handover .sit-choices { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+#sit-handover .sit-choices label { display: inline-flex; align-items: center; gap: 4px; font-weight: 400; cursor: pointer; margin: 0; }
+#sit-handover .sit-choices input { margin: 0; width: auto; }
+#sit-handover .sit-secret { display: flex; gap: 6px; }
+#sit-handover .sit-secret input { flex: 1; }
+#sit-handover .sit-show { border: 1px solid var(--sit-border); background: #fff; color: var(--sit-text); border-radius: 6px; padding: 0 10px; cursor: pointer; font-size: 0.8rem; }
+#sit-handover .sit-lock { font-size: 0.75rem; color: var(--sit-warn); display: block; margin-top: 3px; }
+#sit-handover .sit-table { border: 1px solid var(--sit-border); border-radius: 8px; padding: 14px; background: #fafbfc; }
+#sit-handover .sit-row { background: #fff; border: 1px solid var(--sit-border); border-radius: 6px; padding: 12px 14px; margin-bottom: 12px; }
+#sit-handover .sit-row-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; }
+#sit-handover .sit-row-head strong { color: var(--sit-brand); }
+#sit-handover .sit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px 14px; }
+#sit-handover .sit-grid label { font-size: 0.85rem; font-weight: 600; display: block; margin: 0 0 3px; color: var(--sit-muted); }
+#sit-handover .sit-btn { display: inline-block; border: 1px solid var(--sit-brand); background: var(--sit-brand); color: #fff; padding: 9px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem; line-height: 1.2; text-decoration: none; }
+#sit-handover .sit-btn:hover { background: var(--sit-brand-dark); color: #fff; }
+#sit-handover .sit-btn.sit-secondary { background: #fff; color: var(--sit-brand); }
+#sit-handover .sit-btn.sit-secondary:hover { background: var(--sit-soft); }
+#sit-handover .sit-btn.sit-danger { background: #fff; border-color: var(--sit-danger); color: var(--sit-danger); }
+#sit-handover .sit-btn.sit-small { padding: 4px 10px; font-size: 0.85rem; font-weight: 500; }
+#sit-handover .sit-btn:disabled { opacity: 0.5; cursor: default; }
+#sit-handover .sit-pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--sit-border); }
+#sit-handover .sit-notice { border-radius: 6px; padding: 12px 14px; margin: 0 0 18px; font-size: 0.92rem; }
+#sit-handover .sit-info { background: var(--sit-soft); border: 1px solid #c5d7ea; }
+#sit-handover .sit-ok { background: #e7f6ec; border: 1px solid #a8dbb9; color: var(--sit-ok); }
+#sit-handover .sit-err { background: #fdecea; border: 1px solid #f4b9b2; color: var(--sit-danger); }
+@media (max-width: 820px) {
+  #sit-handover .sit-layout { grid-template-columns: minmax(0, 1fr); }
+  #sit-handover .sit-nav { position: static; }
+  #sit-handover .sit-nav ol { display: flex; overflow-x: auto; gap: 4px; padding-bottom: 6px; }
+  #sit-handover .sit-nav button { white-space: nowrap; }
+  #sit-handover .sit-count { display: none; }
+  #sit-handover .sit-card { padding: 18px 16px; }
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.iife.js"></script>
+<script>
+(function () {
+'use strict';
+var CONFIG = {"provider":"Sterling iT","endpoint":"/handover/submit.php"};
+var SECTIONS = [{"id":"business","title":"Business details","intro":"Who you are and who we should talk to.","fields":[{"id":"company_name","label":"Business / trading name","type":"text","required":true},{"id":"legal_name","label":"Legal entity name (if different)","type":"text"},{"id":"abn","label":"ABN","type":"text"},{"id":"address","label":"Main street address","type":"textarea"},{"id":"staff_count","label":"Number of staff / users","type":"number"},{"id":"industry","label":"Industry","type":"text"},{"id":"hours","label":"Business hours","type":"text","placeholder":"e.g. Mon-Fri 8:30am-5pm"},{"id":"handover_date","label":"Preferred handover date","type":"date"},{"id":"prev_provider","label":"Previous IT provider (company and contact)","type":"textarea"},{"id":"prev_provider_status","label":"Is the previous provider assisting with the handover?","type":"yesno"},{"id":"contacts","label":"Key contacts","type":"table","help":"Include the primary decision maker, billing contact, after-hours contact and anyone authorised to approve IT changes.","columns":[{"id":"name","label":"Name","type":"text"},{"id":"role","label":"Role","type":"select","options":["Primary contact","Decision maker","Billing / accounts","After-hours","Site contact","Other"]},{"id":"phone","label":"Phone","type":"tel"},{"id":"email","label":"Email","type":"email"},{"id":"can_approve","label":"Can approve changes?","type":"yesno"}]},{"id":"sites","label":"Sites / offices","type":"table","columns":[{"id":"name","label":"Site name","type":"text"},{"id":"address","label":"Address","type":"text"},{"id":"users","label":"Users at site","type":"number"},{"id":"contact","label":"On-site contact","type":"text"},{"id":"access","label":"Access notes (keys, alarm, hours)","type":"text"}]}]},{"id":"m365","title":"Microsoft 365","intro":"Tenant, licensing and security configuration.","fields":[{"id":"uses_m365","label":"Do you use Microsoft 365?","type":"yesno"},{"id":"tenant_name","label":"Tenant name (xxx.onmicrosoft.com)","type":"text","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"tenant_id","label":"Tenant ID (if known)","type":"text","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"domains","label":"Domains added to the tenant","type":"textarea","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"billing","label":"How are licences purchased?","type":"select","options":["Direct from Microsoft (credit card)","Through a CSP / reseller","Through previous IT provider","Unsure"],"showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"csp_name","label":"CSP / reseller name and partner of record","type":"text","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"licences","label":"Licences","type":"table","showIf":{"field":"uses_m365","in":["Yes","Unsure"]},"columns":[{"id":"sku","label":"Licence (e.g. Business Premium)","type":"text"},{"id":"qty","label":"Quantity","type":"number"},{"id":"term","label":"Term","type":"select","options":["Monthly","Annual (paid monthly)","Annual (paid upfront)","Unsure"]},{"id":"renewal","label":"Renewal date","type":"date"}]},{"id":"admins","label":"Global / privileged admin accounts","type":"table","showIf":{"field":"uses_m365","in":["Yes","Unsure"]},"help":"Passwords are encrypted when stored and are not included in emailed reports.","columns":[{"id":"username","label":"Username","type":"text"},{"id":"password","label":"Password","type":"secret"},{"id":"role","label":"Role","type":"text","placeholder":"Global Admin"},{"id":"mfa","label":"MFA method / who holds the device","type":"text"},{"id":"breakglass","label":"Break-glass account?","type":"yesno"}]},{"id":"mfa_enforced","label":"Is MFA enforced for all users?","type":"yesno","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"security_defaults","label":"Security defaults or Conditional Access?","type":"select","options":["Security defaults","Conditional Access policies","Neither","Unsure"],"showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"entra_connect","label":"Is Entra Connect (AD sync) in use?","type":"yesno","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"entra_connect_server","label":"Entra Connect server name","type":"text","showIf":{"field":"entra_connect","in":["Yes"]}},{"id":"intune","label":"Are devices managed with Intune / Autopilot?","type":"yesno","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"exchange_hybrid","label":"Any on-premises Exchange or hybrid setup?","type":"yesno","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"teams_phone","label":"Teams Phone / calling plans in use?","type":"yesno","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"shared_mailboxes","label":"Shared mailboxes, distribution lists, forwarding rules worth noting","type":"textarea","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}},{"id":"notes","label":"Other notes","type":"textarea","showIf":{"field":"uses_m365","in":["Yes","Unsure"]}}]},{"id":"google","title":"Google Workspace","intro":"Only needed if you use Google Workspace (G Suite).","fields":[{"id":"uses_google","label":"Do you use Google Workspace?","type":"yesno"},{"id":"primary_domain","label":"Primary domain","type":"text","showIf":{"field":"uses_google","in":["Yes","Unsure"]}},{"id":"edition","label":"Edition","type":"select","options":["Business Starter","Business Standard","Business Plus","Enterprise","Legacy G Suite","Unsure"],"showIf":{"field":"uses_google","in":["Yes","Unsure"]}},{"id":"licence_count","label":"Number of licences","type":"number","showIf":{"field":"uses_google","in":["Yes","Unsure"]}},{"id":"billing","label":"Billed direct or via reseller (name)?","type":"text","showIf":{"field":"uses_google","in":["Yes","Unsure"]}},{"id":"renewal","label":"Renewal date / plan type","type":"text","showIf":{"field":"uses_google","in":["Yes","Unsure"]}},{"id":"admins","label":"Super admin accounts","type":"table","showIf":{"field":"uses_google","in":["Yes","Unsure"]},"columns":[{"id":"username","label":"Username","type":"text"},{"id":"password","label":"Password","type":"secret"},{"id":"mfa","label":"2-Step Verification method / who holds it","type":"text"}]},{"id":"two_sv","label":"Is 2-Step Verification enforced?","type":"yesno","showIf":{"field":"uses_google","in":["Yes","Unsure"]}},{"id":"secondary_domains","label":"Secondary / alias domains","type":"textarea","showIf":{"field":"uses_google","in":["Yes","Unsure"]}},{"id":"migration","label":"Any plan to migrate to or from Google Workspace?","type":"textarea","showIf":{"field":"uses_google","in":["Yes","Unsure"]}}]},{"id":"email","title":"Email security & other mail","intro":"Mail filtering, relays and email hosted elsewhere.","fields":[{"id":"other_host","label":"Is any email hosted somewhere other than M365 / Google? (cPanel, ISP, etc.)","type":"textarea"},{"id":"filtering","label":"Email filtering / archiving product (e.g. Mimecast, Proofpoint, Defender)","type":"text"},{"id":"spf_dkim_dmarc","label":"SPF, DKIM and DMARC configured?","type":"select","options":["All three","Some","None","Unsure"]},{"id":"dmarc_reporting","label":"DMARC reporting service","type":"text"},{"id":"signatures","label":"Email signature tool (e.g. Exclaimer, CodeTwo)","type":"text"},{"id":"scan_to_email","label":"How do printers / scanners / apps send email? (SMTP relay, direct send, etc.)","type":"textarea"}]},{"id":"domains","title":"Domain names & DNS","fields":[{"id":"list","label":"Domain names","type":"table","columns":[{"id":"domain","label":"Domain","type":"text"},{"id":"registrar","label":"Registrar (e.g. VentraIP, Crazy Domains)","type":"text"},{"id":"registrant","label":"Registrant / owner name","type":"text"},{"id":"expiry","label":"Expiry date","type":"date"},{"id":"auto_renew","label":"Auto-renew on?","type":"yesno"},{"id":"dns_host","label":"DNS hosted at (registrar, Cloudflare, web host...)","type":"text"},{"id":"login_user","label":"Registrar login","type":"text"},{"id":"login_pass","label":"Registrar password","type":"secret"},{"id":"dns_login","label":"DNS host login (if different)","type":"text"},{"id":"dns_pass","label":"DNS host password","type":"secret"}]},{"id":"au_eligibility","label":".com.au eligibility details (ABN the domain is registered against)","type":"text"},{"id":"notes","label":"Other DNS notes (unusual records, third parties with DNS access)","type":"textarea"}]},{"id":"websites","title":"Websites","fields":[{"id":"list","label":"Websites","type":"table","columns":[{"id":"url","label":"Website URL","type":"url"},{"id":"host","label":"Hosting provider","type":"text"},{"id":"cms","label":"Platform (WordPress, Shopify, Wix...)","type":"text"},{"id":"developer","label":"Developer / agency and contact","type":"text"},{"id":"hosting_user","label":"Hosting login","type":"text"},{"id":"hosting_pass","label":"Hosting password","type":"secret"},{"id":"cms_user","label":"Website admin login","type":"text"},{"id":"cms_pass","label":"Website admin password","type":"secret"},{"id":"ssl","label":"SSL certificate (provider / expiry)","type":"text"},{"id":"backups","label":"Website backups (who / how often)","type":"text"},{"id":"renewal","label":"Hosting renewal date","type":"date"}]}]},{"id":"internet","title":"Internet services","fields":[{"id":"services","label":"Internet connections","type":"table","help":"One row per connection, including backup 4G/5G or Starlink links.","columns":[{"id":"site","label":"Site","type":"text"},{"id":"isp","label":"ISP","type":"text"},{"id":"type","label":"Connection type","type":"select","options":["NBN FTTP","NBN FTTN / FTTC","NBN HFC","NBN Fixed Wireless","NBN Satellite","Business fibre (EFM / Enterprise Ethernet)","4G / 5G","Starlink","Other"]},{"id":"speed","label":"Speed plan","type":"text"},{"id":"account","label":"Account / service number","type":"text"},{"id":"static_ip","label":"Static IP address(es)","type":"text"},{"id":"pppoe_user","label":"PPPoE / connection username","type":"text"},{"id":"pppoe_pass","label":"PPPoE / connection password","type":"secret"},{"id":"portal_user","label":"ISP portal login","type":"text"},{"id":"portal_pass","label":"ISP portal password","type":"secret"},{"id":"support","label":"ISP support phone","type":"tel"},{"id":"contract_end","label":"Contract end date","type":"date"},{"id":"modem","label":"Modem / NTD make and model","type":"text"}]},{"id":"failover","label":"Is there automatic failover between connections?","type":"yesno"}]},{"id":"phones","title":"Phones & telephony","fields":[{"id":"system_type","label":"Phone system type","type":"select","options":["Hosted VoIP / cloud PBX","On-premises PBX","Microsoft Teams Phone","Mobile only","Traditional landlines","Other"]},{"id":"provider","label":"Provider / platform (e.g. 3CX, Telstra, Crazy Tel, Maxo)","type":"text"},{"id":"account","label":"Account number","type":"text"},{"id":"numbers","label":"Main phone numbers and any 1300 / 1800 numbers","type":"textarea"},{"id":"portal_url","label":"Admin portal URL","type":"url"},{"id":"portal_user","label":"Admin portal login","type":"text"},{"id":"portal_pass","label":"Admin portal password","type":"secret"},{"id":"contract_end","label":"Contract end date","type":"date"},{"id":"call_flow","label":"Call flow / IVR / after-hours diversion summary","type":"textarea"},{"id":"handsets","label":"Handsets & devices","type":"table","columns":[{"id":"make","label":"Make","type":"text"},{"id":"model","label":"Model","type":"text"},{"id":"qty","label":"Quantity","type":"number"},{"id":"owned","label":"Owned / leased / rented","type":"select","options":["Owned","Leased","Rented","Unsure"]},{"id":"notes","label":"Notes","type":"text"}]},{"id":"mobile_carrier","label":"Mobile carrier and number of mobile services","type":"text"},{"id":"mobile_mdm","label":"Are company mobiles managed (Intune, Apple Business Manager, etc.)?","type":"text"}]},{"id":"apps","title":"Third-party apps & subscriptions","intro":"Every service the business pays for or relies on: security tools, relays, design software, line-of-business apps.","fields":[{"id":"antivirus","label":"Antivirus / EDR product (e.g. Defender, SentinelOne, Bitdefender, Sophos)","type":"text"},{"id":"dns_filter","label":"DNS / web filtering (e.g. DNSFilter, Cisco Umbrella)","type":"text"},{"id":"smtp_relay","label":"SMTP relay service (e.g. SMTP2GO, SendGrid)","type":"text"},{"id":"adobe","label":"Adobe licences (product, quantity, who owns the Admin Console)","type":"textarea"},{"id":"password_manager","label":"Password manager (e.g. Bitwarden, Keeper, 1Password)","type":"text"},{"id":"rmm","label":"Remote support / RMM tools currently installed (to be removed or kept)","type":"textarea"},{"id":"accounting","label":"Accounting / payroll software (Xero, MYOB, etc.)","type":"text"},{"id":"lob","label":"Line-of-business / industry-specific applications","type":"textarea"},{"id":"list","label":"Subscription & licence register","type":"table","help":"Add a row for each service above, plus anything else (Zoom, Canva, DocuSign, CRM, etc.).","columns":[{"id":"name","label":"Product / service","type":"text"},{"id":"vendor","label":"Vendor / reseller","type":"text"},{"id":"purpose","label":"What it is used for","type":"text"},{"id":"qty","label":"Licences / seats","type":"number"},{"id":"renewal","label":"Renewal date","type":"date"},{"id":"cost","label":"Cost and billing frequency","type":"text"},{"id":"billed_to","label":"Billed to (card / invoice / IT provider)","type":"text"},{"id":"admin_url","label":"Admin console URL","type":"url"},{"id":"admin_user","label":"Admin username","type":"text"},{"id":"admin_pass","label":"Admin password / API key","type":"secret"},{"id":"notes","label":"Notes","type":"text"}]}]},{"id":"hardware","title":"Hardware & peripherals","intro":"Make, model, serial and any subscription or support contract for each device.","fields":[{"id":"firewalls","label":"Firewalls / routers","type":"table","columns":[{"id":"site","label":"Site","type":"text"},{"id":"make","label":"Make","type":"text"},{"id":"model","label":"Model","type":"text"},{"id":"serial","label":"Serial number","type":"text"},{"id":"firmware","label":"Firmware version","type":"text"},{"id":"lan_ip","label":"LAN / management IP","type":"text"},{"id":"admin_url","label":"Admin URL / port","type":"text"},{"id":"admin_user","label":"Admin username","type":"text"},{"id":"admin_pass","label":"Admin password","type":"secret"},{"id":"subscription","label":"Security subscription (e.g. FortiGuard, UTM bundle)","type":"text"},{"id":"sub_expiry","label":"Subscription / support expiry","type":"date"},{"id":"cloud_mgmt","label":"Cloud management portal (e.g. FortiCloud, Meraki)","type":"text"}]},{"id":"switches_wifi","label":"Switches & wireless access points","type":"table","columns":[{"id":"type","label":"Type","type":"select","options":["Switch","Wireless AP","Wireless controller","Other"]},{"id":"site","label":"Site / location","type":"text"},{"id":"make","label":"Make","type":"text"},{"id":"model","label":"Model","type":"text"},{"id":"serial","label":"Serial","type":"text"},{"id":"ip","label":"Management IP","type":"text"},{"id":"admin_user","label":"Admin username","type":"text"},{"id":"admin_pass","label":"Admin password","type":"secret"},{"id":"controller","label":"Controller / cloud portal (UniFi, Omada, Meraki)","type":"text"},{"id":"licence_expiry","label":"Licence expiry","type":"date"}]},{"id":"printers","label":"Printers, copiers & scanners","type":"table","columns":[{"id":"location","label":"Location","type":"text"},{"id":"make","label":"Make","type":"text"},{"id":"model","label":"Model","type":"text"},{"id":"serial","label":"Serial","type":"text"},{"id":"ip","label":"IP address","type":"text"},{"id":"ownership","label":"Owned / leased","type":"select","options":["Owned","Leased","Rented","Unsure"]},{"id":"supplier","label":"Supplier / service contract and phone","type":"text"},{"id":"contract_end","label":"Lease / contract end","type":"date"},{"id":"scan_to","label":"Scan-to (email, folder, SharePoint)","type":"text"},{"id":"admin_pass","label":"Admin panel password","type":"secret"}]},{"id":"security_systems","label":"Security / alarm systems & access control","type":"table","columns":[{"id":"site","label":"Site","type":"text"},{"id":"make","label":"Make / model","type":"text"},{"id":"installer","label":"Installer / service company","type":"text"},{"id":"monitoring","label":"Monitoring company and account no.","type":"text"},{"id":"network","label":"Network connected? (IP)","type":"text"},{"id":"app","label":"App / remote access","type":"text"},{"id":"codes","label":"Master / installer codes","type":"secret"},{"id":"contract_end","label":"Contract end","type":"date"}]},{"id":"cctv","label":"CCTV","type":"table","columns":[{"id":"site","label":"Site","type":"text"},{"id":"nvr","label":"NVR / DVR make and model","type":"text"},{"id":"cameras","label":"Number of cameras","type":"number"},{"id":"ip","label":"NVR IP address","type":"text"},{"id":"remote","label":"Remote viewing app / cloud service","type":"text"},{"id":"admin_user","label":"Admin username","type":"text"},{"id":"admin_pass","label":"Admin password","type":"secret"},{"id":"retention","label":"Recording retention (days)","type":"number"},{"id":"installer","label":"Installer / support company","type":"text"}]},{"id":"ups","label":"UPS / power protection","type":"table","columns":[{"id":"location","label":"Location","type":"text"},{"id":"make","label":"Make / model","type":"text"},{"id":"protects","label":"What it protects","type":"text"},{"id":"battery_date","label":"Battery last replaced","type":"date"},{"id":"managed","label":"Network card / shutdown software?","type":"text"}]},{"id":"other","label":"Other devices (NAS, IoT, door intercoms, TVs, meeting room kit...)","type":"table","columns":[{"id":"device","label":"Device","type":"text"},{"id":"make","label":"Make / model","type":"text"},{"id":"serial","label":"Serial","type":"text"},{"id":"ip","label":"IP address","type":"text"},{"id":"subscription","label":"Subscription / support contract","type":"text"},{"id":"admin_user","label":"Login","type":"text"},{"id":"admin_pass","label":"Password","type":"secret"}]}]},{"id":"servers","title":"Servers, domain & computers","fields":[{"id":"servers","label":"Servers (physical and virtual, on-site)","type":"table","columns":[{"id":"name","label":"Server name","type":"text"},{"id":"role","label":"Roles (DC, file, print, app, SQL, Hyper-V host...)","type":"text"},{"id":"os","label":"Operating system","type":"text"},{"id":"kind","label":"Physical / virtual","type":"select","options":["Physical","Virtual (Hyper-V)","Virtual (VMware)","Other"]},{"id":"make","label":"Make / model","type":"text"},{"id":"serial","label":"Serial / service tag","type":"text"},{"id":"warranty","label":"Warranty expiry","type":"date"},{"id":"ip","label":"IP address","type":"text"},{"id":"location","label":"Location","type":"text"},{"id":"remote_mgmt","label":"iDRAC / iLO IP","type":"text"},{"id":"remote_mgmt_pass","label":"iDRAC / iLO password","type":"secret"}]},{"id":"ad_used","label":"Is there an Active Directory domain?","type":"yesno"},{"id":"ad_domain","label":"AD domain name (e.g. company.local)","type":"text","showIf":{"field":"ad_used","in":["Yes","Unsure"]}},{"id":"ad_netbios","label":"NetBIOS name","type":"text","showIf":{"field":"ad_used","in":["Yes","Unsure"]}},{"id":"ad_dcs","label":"Domain controllers","type":"text","showIf":{"field":"ad_used","in":["Yes","Unsure"]}},{"id":"ad_level","label":"Forest / domain functional level","type":"text","showIf":{"field":"ad_used","in":["Yes","Unsure"]}},{"id":"dsrm","label":"DSRM (Directory Services Restore Mode) password","type":"secret","showIf":{"field":"ad_used","in":["Yes","Unsure"]}},{"id":"domain_admins","label":"Domain admin & service accounts","type":"table","showIf":{"field":"ad_used","in":["Yes","Unsure"]},"columns":[{"id":"username","label":"Username (DOMAIN\\user)","type":"text"},{"id":"password","label":"Password","type":"secret"},{"id":"purpose","label":"Purpose (admin, backup service, scan-to-folder...)","type":"text"},{"id":"notes","label":"Notes","type":"text"}]},{"id":"server_local","label":"Server local administrator / root accounts","type":"table","columns":[{"id":"server","label":"Server / hypervisor","type":"text"},{"id":"username","label":"Username","type":"text"},{"id":"password","label":"Password","type":"secret"}]},{"id":"pc_count","label":"Number of desktops / laptops","type":"number"},{"id":"pc_join","label":"How are computers joined?","type":"checkboxes","options":["AD domain joined","Entra ID (Azure AD) joined","Hybrid joined","Workgroup / not joined","Mac","Unsure"]},{"id":"laps","label":"Is Windows LAPS (or similar) managing local admin passwords?","type":"yesno"},{"id":"pc_local","label":"Desktop / laptop local accounts","type":"table","help":"If every computer uses the same local admin account, one row with \"All computers\" is fine.","columns":[{"id":"device","label":"Computer name (or \"All computers\")","type":"text"},{"id":"user","label":"Assigned user","type":"text"},{"id":"username","label":"Local account username","type":"text"},{"id":"password","label":"Password","type":"secret"},{"id":"bitlocker","label":"BitLocker / FileVault on? Where are recovery keys?","type":"text"}]},{"id":"pcs","label":"Computer inventory (optional; we can also gather this with our tools)","type":"table","columns":[{"id":"name","label":"Computer name","type":"text"},{"id":"user","label":"User","type":"text"},{"id":"make","label":"Make / model","type":"text"},{"id":"serial","label":"Serial","type":"text"},{"id":"os","label":"Operating system","type":"text"},{"id":"purchased","label":"Purchase / warranty date","type":"date"}]}]},{"id":"network","title":"Network","intro":"IP addressing, VLANs, reservations, Wi-Fi and VPNs. Attach exports or diagrams to the email afterwards if easier.","fields":[{"id":"subnets","label":"Subnets & VLANs","type":"table","columns":[{"id":"site","label":"Site","type":"text"},{"id":"vlan_id","label":"VLAN ID","type":"number"},{"id":"name","label":"Name / purpose","type":"text"},{"id":"subnet","label":"Subnet (CIDR)","type":"text","placeholder":"192.168.1.0/24"},{"id":"gateway","label":"Gateway","type":"text"},{"id":"dhcp_server","label":"DHCP server","type":"text"},{"id":"dhcp_range","label":"DHCP range","type":"text"},{"id":"dns","label":"DNS servers","type":"text"}]},{"id":"reservations","label":"DHCP reservations & static IPs","type":"table","columns":[{"id":"device","label":"Device","type":"text"},{"id":"ip","label":"IP address","type":"text"},{"id":"mac","label":"MAC address","type":"text"},{"id":"kind","label":"Reservation / static","type":"select","options":["DHCP reservation","Static","Unsure"]},{"id":"notes","label":"Notes","type":"text"}]},{"id":"wifi","label":"Wi-Fi networks","type":"table","columns":[{"id":"ssid","label":"SSID","type":"text"},{"id":"purpose","label":"Purpose (staff, guest, IoT)","type":"text"},{"id":"vlan","label":"VLAN","type":"text"},{"id":"security","label":"Security","type":"select","options":["WPA2-Personal","WPA3-Personal","WPA2/3-Enterprise (RADIUS)","Open / captive portal","Unsure"]},{"id":"password","label":"Password","type":"secret"}]},{"id":"public_ips","label":"Public IP addresses in use","type":"textarea"},{"id":"port_forwards","label":"Port forwards / NAT rules / published services","type":"table","columns":[{"id":"service","label":"Service","type":"text"},{"id":"external","label":"External IP:port","type":"text"},{"id":"internal","label":"Internal IP:port","type":"text"},{"id":"restricted","label":"Restricted to source IPs?","type":"text"}]},{"id":"internal_dns","label":"Internal DNS (AD DNS, forwarders, split DNS)","type":"textarea"},{"id":"ra_vpn","label":"Is remote-access VPN in use?","type":"yesno"},{"id":"remote_vpn","label":"Remote-access VPN","type":"table","showIf":{"field":"ra_vpn","in":["Yes","Unsure"]},"columns":[{"id":"type","label":"Type","type":"select","options":["SSL VPN","IPSec (IKEv2)","IPSec (IKEv1 / L2TP)","WireGuard","OpenVPN","Always On VPN","ZTNA","Other"]},{"id":"product","label":"Gateway product (e.g. FortiGate, SonicWall)","type":"text"},{"id":"client","label":"Client software (FortiClient, GlobalProtect...)","type":"text"},{"id":"address","label":"Server address / FQDN and port","type":"text"},{"id":"auth","label":"Authentication (local, AD/LDAP, RADIUS, SAML, MFA)","type":"text"},{"id":"pool","label":"Client IP pool","type":"text"},{"id":"split","label":"Split or full tunnel","type":"select","options":["Split tunnel","Full tunnel","Unsure"]},{"id":"psk","label":"Pre-shared key / certificate password","type":"secret"},{"id":"users","label":"Who uses it","type":"text"}]},{"id":"s2s_vpn","label":"Are there site-to-site VPNs?","type":"yesno"},{"id":"site_vpn","label":"Site-to-site VPN tunnels","type":"table","showIf":{"field":"s2s_vpn","in":["Yes","Unsure"]},"columns":[{"id":"name","label":"Tunnel name","type":"text"},{"id":"local_site","label":"Local site / device","type":"text"},{"id":"remote_site","label":"Remote site / device (or Azure, AWS)","type":"text"},{"id":"local_peer","label":"Local peer public IP","type":"text"},{"id":"remote_peer","label":"Remote peer public IP","type":"text"},{"id":"local_subnets","label":"Local subnets","type":"text"},{"id":"remote_subnets","label":"Remote subnets","type":"text"},{"id":"ike","label":"IKE version","type":"select","options":["IKEv1","IKEv2","Unsure"]},{"id":"phase1","label":"Phase 1 (encryption / hash / DH group / lifetime)","type":"text"},{"id":"phase2","label":"Phase 2 (encryption / hash / PFS / lifetime)","type":"text"},{"id":"psk","label":"Pre-shared key","type":"secret"}]},{"id":"diagram","label":"Is there an existing network diagram? Where is it?","type":"textarea"}]},{"id":"storage","title":"Files & document storage","fields":[{"id":"where","label":"Where are files and documents stored? (tick all that apply)","type":"checkboxes","options":["On-premises file server","NAS (Synology, QNAP...)","SharePoint","OneDrive","Microsoft Teams","Google Drive","Dropbox","Box","Local computers only","USB / external drives","Other"]},{"id":"locations","label":"Storage locations","type":"table","columns":[{"id":"location","label":"Location (server share, SharePoint site, Dropbox...)","type":"text"},{"id":"contents","label":"What is stored there","type":"text"},{"id":"size","label":"Approx. size","type":"text"},{"id":"access","label":"Who has access","type":"text"},{"id":"account","label":"Account owner / admin login","type":"text"},{"id":"password","label":"Password","type":"secret"}]},{"id":"mapped_drives","label":"Mapped drives (letter, path, how they are mapped)","type":"textarea"},{"id":"permissions","label":"How are folder permissions managed? Any sensitive areas (HR, finance)?","type":"textarea"},{"id":"sync","label":"Any sync tools in use (OneDrive sync of SharePoint, Dropbox client, etc.)?","type":"textarea"},{"id":"plans","label":"Any plans to change where files are stored?","type":"textarea"}]},{"id":"backups","title":"Backups","intro":"For each thing that is (or should be) backed up: email, SharePoint / OneDrive, servers, desktops, cloud servers.","fields":[{"id":"jobs","label":"Backups","type":"table","columns":[{"id":"what","label":"What is backed up","type":"select","options":["M365 email (Exchange Online)","SharePoint / OneDrive / Teams","Google Workspace","Servers","Desktops / laptops","NAS","Cloud servers (Azure / AWS)","Line-of-business app / database","Website","Other"]},{"id":"product","label":"Backup product (Datto, Veeam, Acronis, Dropsuite...)","type":"text"},{"id":"scope","label":"Scope (which servers / mailboxes)","type":"text"},{"id":"frequency","label":"Frequency","type":"text"},{"id":"retention","label":"Retention","type":"text"},{"id":"destination","label":"Destination (local, cloud, USB rotation...)","type":"text"},{"id":"offsite","label":"Offsite / immutable copy?","type":"yesno"},{"id":"encrypted","label":"Encrypted?","type":"yesno"},{"id":"last_test","label":"Last restore test","type":"date"},{"id":"alerts","label":"Who receives success / failure alerts","type":"text"},{"id":"console","label":"Console URL / login","type":"text"},{"id":"password","label":"Password / encryption key","type":"secret"}]},{"id":"no_backup","label":"Is there anything you know is NOT backed up?","type":"textarea"},{"id":"dr_plan","label":"Is there a documented disaster recovery / business continuity plan?","type":"yesno"},{"id":"rto","label":"How long could the business operate without its systems? (hours / days)","type":"text"}]},{"id":"cloud","title":"Cloud servers (Azure, AWS, other)","fields":[{"id":"uses_cloud","label":"Do you run any servers or services in Azure, AWS or another cloud?","type":"yesno"},{"id":"providers","label":"Which providers?","type":"checkboxes","options":["Microsoft Azure","AWS","Google Cloud","Hosted / VPS provider","Other"],"showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"subscriptions","label":"Subscription / account IDs and names","type":"textarea","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"billing","label":"Billing model (CSP, pay-as-you-go card, EA) and who pays","type":"text","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"monthly_cost","label":"Approximate monthly cost","type":"text","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"admins","label":"Owner / admin accounts","type":"table","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]},"columns":[{"id":"username","label":"Username","type":"text"},{"id":"password","label":"Password","type":"secret"},{"id":"role","label":"Role (Owner, Contributor, root)","type":"text"},{"id":"mfa","label":"MFA / who holds it","type":"text"}]},{"id":"vms","label":"Virtual machines","type":"table","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]},"columns":[{"id":"name","label":"VM name","type":"text"},{"id":"role","label":"Role","type":"text"},{"id":"os","label":"OS","type":"text"},{"id":"size","label":"Size / SKU","type":"text"},{"id":"region","label":"Region","type":"text"},{"id":"rg","label":"Resource group","type":"text"},{"id":"private_ip","label":"Private IP","type":"text"},{"id":"public_ip","label":"Public IP","type":"text"},{"id":"reserved","label":"Reserved instance / savings plan?","type":"text"},{"id":"schedule","label":"Auto-shutdown schedule","type":"text"}]},{"id":"vnets","label":"Virtual networks and address spaces","type":"textarea","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"connectivity","label":"Connectivity to the office","type":"select","options":["Site-to-site VPN gateway","ExpressRoute / Direct Connect","Point-to-site VPN only","Public access only","Unsure"],"showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"nsg","label":"Firewalls / NSGs / security groups (inbound rules open to the internet?)","type":"textarea","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"identity","label":"Identity in the cloud (Entra Domain Services, DC VM, none)","type":"text","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"storage","label":"Storage accounts / file shares / S3 buckets","type":"textarea","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"avd","label":"Azure Virtual Desktop / Windows 365 / RDS in use?","type":"text","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"backup","label":"Cloud backup / Site Recovery vaults","type":"text","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"keyvault","label":"Key Vaults / secrets managers","type":"text","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"monitoring","label":"Monitoring, alerts and budget alerts configured?","type":"text","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}},{"id":"other_services","label":"Other cloud services (App Services, SQL databases, functions, etc.)","type":"textarea","showIf":{"field":"uses_cloud","in":["Yes","Unsure"]}}]},{"id":"insurance","title":"Insurances & warranties","fields":[{"id":"has_cyber","label":"Do you have cyber insurance?","type":"yesno"},{"id":"cyber_insurer","label":"Insurer and broker (with contact)","type":"text","showIf":{"field":"has_cyber","in":["Yes","Unsure"]}},{"id":"cyber_policy","label":"Policy number","type":"text","showIf":{"field":"has_cyber","in":["Yes","Unsure"]}},{"id":"cyber_renewal","label":"Renewal date","type":"date","showIf":{"field":"has_cyber","in":["Yes","Unsure"]}},{"id":"cyber_requirements","label":"Security requirements in the policy (MFA, EDR, backups, training...)","type":"textarea","showIf":{"field":"has_cyber","in":["Yes","Unsure"]}},{"id":"cyber_hotline","label":"Incident response hotline","type":"tel","showIf":{"field":"has_cyber","in":["Yes","Unsure"]}},{"id":"other","label":"Other relevant insurances","type":"table","help":"Business / equipment / professional indemnity policies that cover IT equipment or data.","columns":[{"id":"type","label":"Type","type":"text"},{"id":"insurer","label":"Insurer / broker","type":"text"},{"id":"policy","label":"Policy number","type":"text"},{"id":"renewal","label":"Renewal date","type":"date"}]},{"id":"warranties","label":"Hardware warranties or support contracts not listed elsewhere","type":"textarea"}]},{"id":"security","title":"Security & compliance","fields":[{"id":"incidents","label":"Any security incidents or breaches in the last 3 years?","type":"textarea"},{"id":"training","label":"Security awareness training in place?","type":"yesno"},{"id":"essential8","label":"Assessed against Essential Eight or other framework?","type":"text"},{"id":"compliance","label":"Compliance obligations (Privacy Act, health records, PCI, etc.)","type":"textarea"},{"id":"policies","label":"Existing IT policies (acceptable use, BYOD, password)","type":"textarea"},{"id":"other_creds","label":"Any other credentials we will need","type":"table","columns":[{"id":"system","label":"System / service","type":"text"},{"id":"url","label":"URL / address","type":"text"},{"id":"username","label":"Username","type":"text"},{"id":"password","label":"Password","type":"secret"},{"id":"mfa","label":"MFA / who holds it","type":"text"},{"id":"notes","label":"Notes","type":"text"}]}]},{"id":"vendors","title":"Vendors & support contacts","fields":[{"id":"list","label":"Other suppliers we may need to deal with","type":"table","columns":[{"id":"company","label":"Company","type":"text"},{"id":"service","label":"What they provide","type":"text"},{"id":"contact","label":"Contact name","type":"text"},{"id":"phone","label":"Phone","type":"tel"},{"id":"email","label":"Email","type":"email"},{"id":"account","label":"Account / customer number","type":"text"}]}]},{"id":"final","title":"Anything else","fields":[{"id":"known_issues","label":"Known problems or frustrations with your IT today","type":"textarea"},{"id":"projects","label":"Upcoming projects or changes (moves, new staff, new software)","type":"textarea"},{"id":"notes","label":"Anything else we should know","type":"textarea"},{"id":"completed_by","label":"Completed by (name)","type":"text","required":true},{"id":"completed_email","label":"Your email","type":"email"},{"id":"authorised","label":"I confirm I am authorised to share this information with {{provider}}","type":"checkboxes","options":["Yes, I am authorised"],"required":true}]}];
+// Shared by the Node server and the paste-in browser form (inlined by
+// scripts/build-embed.js), so keep this file free of require() and browser APIs.
+/* exported buildReport, isFieldVisible */
+function isFieldVisible(field, sectionValues) {
+  if (!field.showIf) return true;
+  var v = (sectionValues || {})[field.showIf.field];
+  return field.showIf.in.indexOf(v) !== -1;
+}
+// Turns stored answers into a flat, render-ready report model used by both the
+// PDF and Word builders. Unanswered questions and empty rows are left out.
+function buildReport(sections, answers, opts) {
+  opts = opts || {};
+  var redact = opts.redactSecrets !== false;
+  var redactedText = opts.redactedText || '[stored securely; not included in this copy]';
+  var provider = opts.provider || '';
+  function present(value) {
+    if (Array.isArray(value)) return value.length > 0;
+    return value !== undefined && value !== null && String(value).trim() !== '';
+  }
+  function format(field, value) {
+    if (Array.isArray(value)) return value.join(', ');
+    var s = String(value).trim();
+    if (field.type === 'date' && /^\d{4}-\d{2}-\d{2}$/.test(s)) {
+      var p = s.split('-');
+      return p[2] + '/' + p[1] + '/' + p[0];
+    }
+    return s;
+  }
+  function cell(field, value) {
+    var secret = field.type === 'secret';
+    return { label: field.label, value: secret && redact ? redactedText : format(field, value), secret: secret };
+  }
+  return sections.map(function (section) {
+    var values = answers[section.id] || {};
+    var items = [];
+    var tables = [];
+    section.fields.forEach(function (field) {
+      if (!isFieldVisible(field, values)) return;
+      var label = field.label.replace('{{provider}}', provider);
+      if (field.type === 'table') {
+        var rows = (values[field.id] || [])
+          .map(function (row) {
+            return field.columns
+              .filter(function (c) { return present(row[c.id]); })
+              .map(function (c) { return cell(c, row[c.id]); });
+          })
+          .filter(function (cells) { return cells.length > 0; });
+        if (rows.length) tables.push({ label: label, rows: rows });
+      } else if (present(values[field.id])) {
+        var c = cell(field, values[field.id]);
+        c.label = label;
+        items.push(c);
+      }
+    });
+    return { id: section.id, title: section.title, items: items, tables: tables, empty: !items.length && !tables.length };
+  });
+}
+// Builds the PDF report with jsPDF. Shared by the Node server and the paste-in
+// browser form; pass in the jsPDF constructor.
+/* exported buildPdf */
+function buildPdf(JsPDF, report, meta) {
+  var C = { brand: '#1f4e79', text: '#1a1a1a', muted: '#666666', rule: '#d0d7de', band: '#eef3f8', secret: '#8a4b00' };
+  var doc = new JsPDF({ unit: 'pt', format: 'a4' });
+  doc.setProperties({ title: meta.title, author: meta.provider });
+  var pageW = doc.internal.pageSize.getWidth();
+  var pageH = doc.internal.pageSize.getHeight();
+  var M = 50;
+  var width = pageW - M * 2;
+  var labelW = Math.round(width * 0.38);
+  var y = M;
+  function font(style, size, color) {
+    doc.setFont('helvetica', style);
+    doc.setFontSize(size);
+    doc.setTextColor(color);
+  }
+  function lineH(size) { return size * 1.2; }
+  function ensure(h) {
+    if (y + h > pageH - M) { doc.addPage(); y = M; }
+  }
+  function para(text, style, size, color, gap) {
+    font(style, size, color);
+    var lines = doc.splitTextToSize(String(text), width);
+    ensure(lines.length * lineH(size));
+    doc.text(lines, M, y, { baseline: 'top' });
+    y += lines.length * lineH(size) + (gap || 0);
+  }
+  function row(label, value, secret) {
+    font('normal', 9.5, C.muted);
+    var l = doc.splitTextToSize(String(label), labelW - 8);
+    var v = doc.splitTextToSize(String(value), width - labelW);
+    var h = Math.max(l.length, v.length) * lineH(9.5) + 6;
+    ensure(h);
+    doc.text(l, M, y + 3, { baseline: 'top' });
+    doc.setTextColor(secret ? C.secret : C.text);
+    doc.text(v, M + labelW, y + 3, { baseline: 'top' });
+    y += h;
+    doc.setDrawColor(C.rule);
+    doc.setLineWidth(0.5);
+    doc.line(M, y, M + width, y);
+  }
+  para(meta.provider, 'bold', 20, C.brand, 4);
+  para(meta.title, 'bold', 16, C.text, 2);
+  para(meta.subtitle, 'normal', 10, C.muted, 6);
+  if (meta.notice) para(meta.notice, 'normal', 9, C.secret, 0);
+  y += 14;
+  report.forEach(function (section) {
+    ensure(60);
+    doc.setFillColor(C.brand);
+    doc.rect(M, y, width, 22, 'F');
+    font('bold', 12, '#ffffff');
+    doc.text(section.title, M + 8, y + 6, { baseline: 'top' });
+    y += 28;
+    if (section.empty) {
+      para('No information provided.', 'italic', 9.5, C.muted, 14);
+      return;
+    }
+    section.items.forEach(function (it) { row(it.label, it.value, it.secret); });
+    section.tables.forEach(function (table) {
+      ensure(80);
+      y += 8;
+      para(table.label, 'bold', 10.5, C.brand, 3);
+      table.rows.forEach(function (cells, i) {
+        ensure(36);
+        doc.setFillColor(C.band);
+        doc.rect(M, y, width, 16, 'F');
+        font('bold', 9, C.text);
+        doc.text('#' + (i + 1), M + 6, y + 4, { baseline: 'top' });
+        y += 18;
+        cells.forEach(function (c) { row(c.label, c.value, c.secret); });
+        y += 6;
+      });
+    });
+    y += 14;
+  });
+  var pages = doc.getNumberOfPages();
+  for (var i = 1; i <= pages; i++) {
+    doc.setPage(i);
+    font('normal', 8, C.muted);
+    doc.text(meta.title + '  |  Page ' + i + ' of ' + pages + '  |  CONFIDENTIAL', pageW / 2, pageH - 30, { align: 'center' });
+  }
+  return doc;
+}
+// Builds the Word report with the `docx` library. Shared by the Node server and
+// the paste-in browser form; pass in the docx module (window.docx in browsers).
+/* exported buildDocx */
+function buildDocx(D, report, meta) {
+  var BRAND = '1F4E79';
+  var border = { style: D.BorderStyle.SINGLE, size: 4, color: 'D0D7DE' };
+  var borders = { top: border, bottom: border, left: border, right: border, insideHorizontal: border, insideVertical: border };
+  function cell(text, o) {
+    return new D.TableCell({
+      width: { size: o.width, type: D.WidthType.PERCENTAGE },
+      shading: o.shade ? { type: D.ShadingType.CLEAR, fill: o.shade, color: 'auto' } : undefined,
+      children: String(text).split('\n').map(function (line) {
+        return new D.Paragraph({ children: [new D.TextRun({ text: line, color: o.color, size: 19 })] });
+      }),
+    });
+  }
+  function kvTable(cells) {
+    return new D.Table({
+      width: { size: 100, type: D.WidthType.PERCENTAGE },
+      borders: borders,
+      rows: cells.map(function (c) {
+        return new D.TableRow({
+          children: [
+            cell(c.label, { color: '555555', shade: 'F6F8FA', width: 38 }),
+            cell(c.value, { color: c.secret ? '8A4B00' : undefined, width: 62 }),
+          ],
+        });
+      }),
+    });
+  }
+  function text(t, o) { return new D.TextRun(Object.assign({ text: t }, o || {})); }
+  var children = [
+    new D.Paragraph({ children: [text(meta.provider, { bold: true, color: BRAND, size: 36 })] }),
+    new D.Paragraph({ children: [text(meta.title, { bold: true, size: 40 })] }),
+    new D.Paragraph({ children: [text(meta.subtitle, { color: '666666' })] }),
+  ];
+  if (meta.notice) {
+    children.push(new D.Paragraph({ spacing: { before: 120 }, children: [text(meta.notice, { color: '8A4B00', size: 18 })] }));
+  }
+  report.forEach(function (section) {
+    children.push(new D.Paragraph({ heading: D.HeadingLevel.HEADING_1, spacing: { before: 360 }, children: [text(section.title, { color: BRAND })] }));
+    if (section.empty) {
+      children.push(new D.Paragraph({ children: [text('No information provided.', { italics: true, color: '666666' })] }));
+      return;
+    }
+    if (section.items.length) children.push(kvTable(section.items));
+    section.tables.forEach(function (table) {
+      children.push(new D.Paragraph({ heading: D.HeadingLevel.HEADING_2, spacing: { before: 240 }, children: [text(table.label)] }));
+      table.rows.forEach(function (cells, i) {
+        children.push(new D.Paragraph({ spacing: { before: 120, after: 40 }, children: [text('#' + (i + 1), { bold: true })] }));
+        children.push(kvTable(cells));
+      });
+    });
+  });
+  return new D.Document({
+    creator: meta.provider,
+    title: meta.title,
+    styles: { default: { document: { run: { font: 'Calibri' } } } },
+    sections: [{
+      properties: { page: { margin: { top: 1000, bottom: 1000, left: 1000, right: 1000 } } },
+      footers: {
+        default: new D.Footer({
+          children: [new D.Paragraph({
+            alignment: D.AlignmentType.CENTER,
+            children: [
+              text(meta.title + '  |  Page ', { size: 16, color: '666666' }),
+              new D.TextRun({ children: [D.PageNumber.CURRENT], size: 16, color: '666666' }),
+              text('  |  CONFIDENTIAL', { size: 16, color: '666666' }),
+            ],
+          })],
+        }),
+      },
+      children: children,
+    }],
+  });
+}
+/* global CONFIG, SECTIONS, buildReport, isFieldVisible, buildPdf, buildDocx, jspdf, docx */
+// Browser side of the paste-in questionnaire. scripts/build-embed.js wraps this
+// file together with CONFIG, SECTIONS and the shared builders into one snippet.
+var root = document.getElementById('sit-handover');
+var STORE_KEY = 'sit-handover-v1';
+var state = load() || { ref: newRef(), answers: {}, current: 0, savedAt: null };
+var saveTimer = null;
+function newRef() {
+  var a = new Uint8Array(6);
+  (window.crypto || window.msCrypto).getRandomValues(a);
+  return Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+}
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)); } catch (e) { return null; }
+}
+function persist() {
+  state.savedAt = new Date().toISOString();
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    setStatus('Saved on this computer ' + new Date().toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit' }));
+  } catch (e) {
+    setStatus('Could not save in this browser. Use "Save to file".', true);
+  }
+}
+function markDirty() {
+  setStatus('Saving…');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(persist, 800);
+  updateNav();
+}
+function h(tag, attrs) {
+  var el = document.createElement(tag);
+  attrs = attrs || {};
+  Object.keys(attrs).forEach(function (k) {
+    var v = attrs[k];
+    if (v === undefined || v === null || v === false) return;
+    if (k.indexOf('on') === 0) el.addEventListener(k.slice(2), v);
+    else if (k === 'class') el.className = v;
+    else el.setAttribute(k, v === true ? '' : v);
+  });
+  for (var i = 2; i < arguments.length; i++) append(el, arguments[i]);
+  return el;
+}
+function append(el, c) {
+  if (c === null || c === undefined || c === false) return;
+  if (Array.isArray(c)) { c.forEach(function (x) { append(el, x); }); return; }
+  el.appendChild(typeof c === 'string' || typeof c === 'number' ? document.createTextNode(String(c)) : c);
+}
+function $(sel) { return root.querySelector(sel); }
+function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+function label(f) { return f.label.replace('{{provider}}', CONFIG.provider); }
+// ---- layout -----------------------------------------------------------------
+root.className = 'sit-root';
+append(root, [
+  h('div', { class: 'sit-toolbar' },
+    h('span', { class: 'sit-status', id: 'sit-status' }),
+    h('span', { class: 'sit-spacer' }),
+    h('button', { type: 'button', class: 'sit-btn sit-small sit-secondary', onclick: saveToFile }, 'Save to file'),
+    h('button', { type: 'button', class: 'sit-btn sit-small sit-secondary', onclick: function () { $('#sit-file').click(); } }, 'Open saved file'),
+    h('input', { type: 'file', id: 'sit-file', accept: '.json,application/json', class: 'sit-hidden', onchange: openFile }),
+    h('button', { type: 'button', class: 'sit-btn sit-small sit-danger', onclick: startOver }, 'Start over')),
+  h('div', { class: 'sit-layout', id: 'sit-app' },
+    h('nav', { class: 'sit-nav', 'aria-label': 'Questionnaire sections' },
+      h('div', { class: 'sit-progress' }, h('div', { id: 'sit-progress' })),
+      h('ol', { id: 'sit-nav' })),
+    h('div', { class: 'sit-card' },
+      h('div', { class: 'sit-notice sit-info', id: 'sit-intro' },
+        'Your answers save automatically in this browser on this computer. To finish on another computer, use "Save to file" and open it there. ',
+        'Passwords are only sent to ' + CONFIG.provider + ' inside an encrypted file.'),
+      h('h2', { id: 'sit-title' }),
+      h('p', { class: 'sit-intro', id: 'sit-section-intro' }),
+      h('div', { id: 'sit-body' }),
+      h('div', { class: 'sit-notice sit-err sit-hidden', id: 'sit-error' }),
+      h('div', { class: 'sit-pager' },
+        h('button', { type: 'button', class: 'sit-btn sit-secondary', id: 'sit-prev', onclick: function () { go(state.current - 1); } }, 'Previous'),
+        h('button', { type: 'button', class: 'sit-btn', id: 'sit-next', onclick: function () { go(state.current + 1); } }, 'Next'),
+        h('button', { type: 'button', class: 'sit-btn sit-hidden', id: 'sit-submit', onclick: submit }, 'Submit questionnaire')))),
+  h('div', { class: 'sit-card sit-hidden', id: 'sit-done' },
+    h('h2', {}, 'Thank you'),
+    h('div', { class: 'sit-notice sit-ok' }, 'Your questionnaire has been sent to ' + CONFIG.provider + '. We will be in touch if we have any questions.'),
+    h('p', {}, 'Your answers have been cleared from this browser. You can keep a copy (without passwords) for your records:'),
+    h('button', { type: 'button', class: 'sit-btn sit-secondary', id: 'sit-copy' }, 'Download my copy (PDF)')),
+]);
+function setStatus(text, err) {
+  var el = $('#sit-status');
+  el.textContent = text;
+  el.className = 'sit-status' + (err ? ' sit-status-err' : '');
+}
+// ---- inputs -------------------------------------------------------------------
+var uid = 0;
+function input(field, value, onChange, idAttr) {
+  var common = { id: idAttr, placeholder: field.placeholder };
+  switch (field.type) {
+    case 'textarea':
+      var ta = h('textarea', Object.assign({ oninput: function (e) { onChange(e.target.value); } }, common));
+      ta.value = value || '';
+      return ta;
+    case 'select':
+      return h('select', Object.assign({ onchange: function (e) { onChange(e.target.value); } }, common),
+        h('option', { value: '' }, '- Select -'),
+        field.options.map(function (o) { return h('option', { value: o, selected: o === value }, o); }));
+    case 'yesno':
+    case 'radio':
+      var opts = field.type === 'yesno' ? ['Yes', 'No', 'Unsure'] : field.options;
+      var name = 'sit-r' + (uid++);
+      return h('div', { class: 'sit-choices', role: 'radiogroup', id: idAttr },
+        opts.map(function (o) {
+          return h('label', {}, h('input', { type: 'radio', name: name, value: o, checked: o === value, onchange: function () { onChange(o); } }), ' ' + o);
+        }));
+    case 'checkboxes':
+      var set = Array.isArray(value) ? value.slice() : [];
+      return h('div', { class: 'sit-choices', id: idAttr },
+        field.options.map(function (o) {
+          return h('label', {}, h('input', {
+            type: 'checkbox', value: o, checked: set.indexOf(o) !== -1,
+            onchange: function (e) {
+              if (e.target.checked) set.push(o); else set.splice(set.indexOf(o), 1);
+              onChange(field.options.filter(function (x) { return set.indexOf(x) !== -1; }));
+            },
+          }), ' ' + o);
+        }));
+    case 'secret':
+      var inp = h('input', Object.assign({ type: 'password', autocomplete: 'new-password', oninput: function (e) { onChange(e.target.value); } }, common));
+      inp.value = value || '';
+      var btn = h('button', {
+        type: 'button', class: 'sit-show',
+        onclick: function () { inp.type = inp.type === 'password' ? 'text' : 'password'; btn.textContent = inp.type === 'password' ? 'Show' : 'Hide'; },
+      }, 'Show');
+      return h('div', {}, h('div', { class: 'sit-secret' }, inp, btn), h('span', { class: 'sit-lock' }, 'Sent encrypted'));
+    default:
+      var type = ['email', 'tel', 'url', 'number', 'date'].indexOf(field.type) !== -1 ? field.type : 'text';
+      var el = h('input', Object.assign({ type: type, oninput: function (e) { onChange(e.target.value); } }, common));
+      el.value = value || '';
+      return el;
+  }
+}
+function tableField(field, rows, onChange) {
+  var wrap = h('div', { class: 'sit-table' });
+  function draw() {
+    clear(wrap);
+    rows.forEach(function (row, i) {
+      append(wrap, h('div', { class: 'sit-row' },
+        h('div', { class: 'sit-row-head' },
+          h('strong', {}, label(field).replace(/s$/, '') + ' #' + (i + 1)),
+          h('button', {
+            type: 'button', class: 'sit-btn sit-small sit-danger',
+            onclick: function () { if (window.confirm('Remove this entry?')) { rows.splice(i, 1); onChange(rows); draw(); } },
+          }, 'Remove')),
+        h('div', { class: 'sit-grid' }, field.columns.map(function (c) {
+          var cid = 'sit-' + field.id + '-' + i + '-' + c.id;
+          return h('div', {}, h('label', { for: cid }, c.label), input(c, row[c.id], function (v) { row[c.id] = v; onChange(rows); }, cid));
+        }))));
+    });
+    append(wrap, h('button', {
+      type: 'button', class: 'sit-btn sit-small sit-secondary',
+      onclick: function () { rows.push({}); onChange(rows); draw(); },
+    }, rows.length ? '+ Add another' : '+ Add entry'));
+  }
+  draw();
+  return wrap;
+}
+// ---- sections -----------------------------------------------------------------
+function answered(section) {
+  var v = state.answers[section.id] || {};
+  return section.fields.filter(function (f) {
+    if (!isFieldVisible(f, v)) return false;
+    var x = v[f.id];
+    return Array.isArray(x) ? x.length > 0 : x !== undefined && String(x).trim() !== '';
+  }).length;
+}
+function renderNav() {
+  var nav = $('#sit-nav');
+  clear(nav);
+  SECTIONS.forEach(function (s, i) {
+    append(nav, h('li', {}, h('button', { type: 'button', onclick: function () { go(i); } }, h('span', {}, s.title), h('span', { class: 'sit-count' }))));
+  });
+  updateNav();
+}
+function updateNav() {
+  var started = 0;
+  Array.prototype.forEach.call(root.querySelectorAll('#sit-nav li'), function (li, i) {
+    var n = answered(SECTIONS[i]);
+    if (n) started++;
+    li.querySelector('.sit-count').textContent = n ? n + ' ✓' : '';
+    li.firstChild.setAttribute('aria-current', i === state.current ? 'step' : 'false');
+  });
+  $('#sit-progress').style.width = Math.round((started / SECTIONS.length) * 100) + '%';
+}
+function renderSection() {
+  var section = SECTIONS[state.current];
+  var values = state.answers[section.id] = state.answers[section.id] || {};
+  $('#sit-title').textContent = section.title;
+  $('#sit-section-intro').textContent = section.intro || '';
+  $('#sit-section-intro').className = 'sit-intro' + (section.intro ? '' : ' sit-hidden');
+  var body = $('#sit-body');
+  clear(body);
+  section.fields.forEach(function (f) {
+    var fid = 'sit-' + section.id + '-' + f.id;
+    var box = h('div', { class: 'sit-field' + (isFieldVisible(f, values) ? '' : ' sit-hidden'), 'data-field': f.id });
+    var grouped = ['yesno', 'radio', 'checkboxes', 'table'].indexOf(f.type) !== -1;
+    append(box, h(grouped ? 'div' : 'label', { for: grouped ? null : fid, class: 'sit-label' }, label(f), f.required ? h('span', { class: 'sit-req' }, '*') : null));
+    if (f.help) append(box, h('p', { class: 'sit-help' }, f.help));
+    var onChange = function (v) {
+      values[f.id] = v;
+      box.classList.remove('sit-invalid');
+      markDirty();
+      section.fields.forEach(function (o) {
+        var el = body.querySelector('[data-field="' + o.id + '"]');
+        if (el && o.showIf) el.classList.toggle('sit-hidden', !isFieldVisible(o, values));
+      });
+    };
+    if (f.type === 'table') append(box, tableField(f, values[f.id] = values[f.id] || [], onChange));
+    else append(box, input(f, values[f.id], onChange, fid));
+    append(body, box);
+  });
+  var last = state.current === SECTIONS.length - 1;
+  $('#sit-prev').disabled = state.current === 0;
+  $('#sit-next').classList.toggle('sit-hidden', last);
+  $('#sit-submit').classList.toggle('sit-hidden', !last);
+  updateNav();
+}
+function go(i) {
+  state.current = Math.max(0, Math.min(SECTIONS.length - 1, i));
+  $('#sit-error').classList.add('sit-hidden');
+  renderSection();
+  persist();
+  root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+// ---- save / load files --------------------------------------------------------
+function download(blob, filename) {
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+function customer() {
+  return (state.answers.business && state.answers.business.company_name) || 'Customer';
+}
+function safeName(s) {
+  return String(s).replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(0, 60) || 'customer';
+}
+function saveToFile() {
+  persist();
+  download(new Blob([JSON.stringify({ format: 'sit-handover', version: 1, state: state })], { type: 'application/json' }),
+    'Handover-progress-' + safeName(customer()) + '.json');
+  window.alert('Saved. This file contains your answers, including any passwords, so keep it somewhere safe.');
+}
+function openFile(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function () {
+    try {
+      var data = JSON.parse(reader.result);
+      if (data.format !== 'sit-handover') throw new Error('bad format');
+      state = data.state;
+      persist();
+      renderNav();
+      renderSection();
+    } catch (err) {
+      window.alert('That file could not be opened. Please choose a file saved from this questionnaire.');
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+function startOver() {
+  if (!window.confirm('Clear all answers from this browser and start again?')) return;
+  try { localStorage.removeItem(STORE_KEY); } catch (err) { /* ignore */ }
+  state = { ref: newRef(), answers: {}, current: 0, savedAt: null };
+  renderNav();
+  renderSection();
+  setStatus('');
+}
+// ---- submit -------------------------------------------------------------------
+function missingRequired() {
+  var out = [];
+  SECTIONS.forEach(function (s) {
+    var v = state.answers[s.id] || {};
+    s.fields.forEach(function (f) {
+      if (!f.required || !isFieldVisible(f, v)) return;
+      var x = v[f.id];
+      if (Array.isArray(x) ? !x.length : !String(x || '').trim()) out.push({ section: s.id, field: f.id, label: label(f) });
+    });
+  });
+  return out;
+}
+function makeFiles(redact, notice) {
+  var name = customer();
+  var meta = {
+    provider: CONFIG.provider,
+    title: 'New Customer Handover: ' + name,
+    subtitle: 'Submitted ' + new Date().toLocaleString('en-AU') + ' (ref ' + state.ref + ')',
+    notice: notice,
+  };
+  var report = buildReport(SECTIONS, state.answers, { redactSecrets: redact, redactedText: '[in the encrypted attachment]', provider: CONFIG.provider });
+  var pdf = buildPdf(jspdf.jsPDF, report, meta).output('blob');
+  return docx.Packer.toBlob(buildDocx(docx, report, meta)).then(function (word) {
+    return { pdf: pdf, docx: word, base: 'Handover-' + safeName(name) };
+  });
+}
+function showError(msg) {
+  var err = $('#sit-error');
+  clear(err);
+  append(err, msg);
+  err.classList.remove('sit-hidden');
+}
+function submit() {
+  $('#sit-error').classList.add('sit-hidden');
+  var missing = missingRequired();
+  if (missing.length) {
+    var first = missing[0];
+    go(SECTIONS.findIndex(function (s) { return s.id === first.section; }));
+    showError('Please answer: ' + missing.map(function (m) { return m.label; }).join('; '));
+    missing.forEach(function (m) {
+      var el = $('#sit-body [data-field="' + m.field + '"]');
+      if (el) el.classList.add('sit-invalid');
+    });
+    return;
+  }
+  if (!window.confirm('Send the questionnaire to ' + CONFIG.provider + ' now?')) return;
+  var btn = $('#sit-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  Promise.all([
+    makeFiles(true, 'Passwords are not included in this copy. They are in the password-protected ZIP attached to the same email.'),
+    makeFiles(false, 'CONFIDENTIAL: this copy includes passwords.'),
+  ]).then(function (files) {
+    var fd = new FormData();
+    var red = files[0];
+    var full = files[1];
+    var fin = state.answers.final || {};
+    fd.append('meta', JSON.stringify({ ref: state.ref, customer: customer(), completed_by: fin.completed_by || '', completed_email: fin.completed_email || '' }));
+    fd.append('website', $('#sit-hp').value);
+    fd.append('report_pdf', red.pdf, red.base + '.pdf');
+    fd.append('report_docx', red.docx, red.base + '.docx');
+    fd.append('full_pdf', full.pdf, full.base + '-FULL.pdf');
+    fd.append('full_docx', full.docx, full.base + '-FULL.docx');
+    return fetch(CONFIG.endpoint, { method: 'POST', body: fd }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok || !data.ok) throw new Error(data.error || 'The server returned an error (' + res.status + ').');
+        return red;
+      });
+    });
+  }).then(function (red) {
+    try { localStorage.removeItem(STORE_KEY); } catch (err) { /* ignore */ }
+    $('#sit-copy').onclick = function () { download(red.pdf, red.base + '.pdf'); };
+    $('#sit-app').classList.add('sit-hidden');
+    root.querySelector('.sit-toolbar').classList.add('sit-hidden');
+    $('#sit-done').classList.remove('sit-hidden');
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }).catch(function (err) {
+    btn.disabled = false;
+    btn.textContent = 'Submit questionnaire';
+    showError('Sorry, the questionnaire could not be sent: ' + err.message + ' Your answers are still saved. Please try again, or use "Save to file" and email the file to ' + CONFIG.provider + '.');
+  });
+}
+// Honeypot field for spam bots (hidden from people).
+append(root, h('input', { type: 'text', id: 'sit-hp', name: 'website', tabindex: '-1', autocomplete: 'off', class: 'sit-hp', 'aria-hidden': 'true' }));
+if (!window.jspdf || !window.docx) {
+  showError('Part of this page failed to load. Please refresh, or try a different browser.');
+}
+renderNav();
+renderSection();
+if (state.savedAt) setStatus('Welcome back. Your answers were restored from this computer.');
+})();
+</script>

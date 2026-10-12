@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>New Customer Handover</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <span class="brand" data-provider>IT</span>
+    <span class="title">New Customer Handover</span>
+    <span class="spacer"></span>
+    <span class="save-state" id="save-state"></span>
+  </header>
+
+  <div id="fatal" class="center hidden"><div class="notice err" id="fatal-msg"></div></div>
+
+  <div id="done" class="center hidden">
+    <div class="card">
+      <h1>Thank you</h1>
+      <div class="notice ok">Your questionnaire has been submitted to <span data-provider></span>.</div>
+      <p>We'll be in touch if we have any questions. If you need to change something, please contact us and we can reopen it for you.</p>
+    </div>
+  </div>
+
+  <div id="app" class="layout hidden">
+    <nav class="sections" aria-label="Sections">
+      <div class="progress" title="Sections with answers"><div id="progress-bar"></div></div>
+      <ol id="nav"></ol>
+    </nav>
+    <main class="card">
+      <div id="link-notice" class="notice info">
+        <strong>Save your private link</strong> to come back later. Anyone with this link can see your answers, so keep it private.
+        <div class="linkbox"><input type="text" id="link" readonly><button class="btn small secondary" id="copy-link">Copy</button></div>
+      </div>
+      <h1 id="section-title"></h1>
+      <p class="intro" id="section-intro"></p>
+      <div id="section-body"></div>
+      <div id="submit-error" class="notice err hidden"></div>
+      <div class="pager">
+        <button class="btn secondary" id="prev">Previous</button>
+        <button class="btn" id="next">Next</button>
+        <button class="btn hidden" id="submit">Submit questionnaire</button>
+      </div>
+    </main>
+  </div>
+  <script src="/form.js"></script>
+</body>
+</html>
