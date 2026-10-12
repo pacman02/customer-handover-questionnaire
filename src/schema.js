@@ -714,10 +714,6 @@ const sections = [
   },
 ];
 
-function isVisible(field, sectionValues) {
-  if (!field.showIf) return true;
-  const v = (sectionValues || {})[field.showIf.field];
-  return field.showIf.in.includes(v);
-}
+const { isFieldVisible: isVisible } = require('./shared/report-core');
 
 module.exports = { sections, isVisible };

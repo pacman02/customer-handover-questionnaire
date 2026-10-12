@@ -11,7 +11,52 @@ backups, Azure / AWS, insurances, security and vendor contacts.
 When the customer submits, the answers are emailed as a **PDF** and a **Word
 document**.
 
-## How it works
+## Two ways to run it
+
+1. **Paste-in version (for sterlingit.com.au).** `dist/handover-form.html` is
+   one block of HTML you paste into a page (WordPress Custom HTML block,
+   Elementor HTML widget, etc.). `dist/submit.php` is uploaded once to the
+   website; it holds the SMTP2GO login and sends the email. See
+   [Paste-in version](#paste-in-version) below.
+2. **Server version.** A Node.js app with links per customer, server-side
+   saving and an admin portal. Described in the rest of this README.
+
+## Paste-in version
+
+- **Saving progress:** answers save in the customer's browser as they type.
+  "Save to file" / "Open saved file" lets them move to another computer.
+  Answers are cleared from the browser after submitting.
+- **Reports:** the PDF and Word documents are generated in the browser, then
+  sent to `submit.php`, which emails them through SMTP2GO.
+- **Passwords:** the PDF and Word attached to the email have passwords
+  removed. Full copies with passwords go in an AES-256 encrypted ZIP attached
+  to the same email (open it with 7-Zip or WinRAR). If no ZIP password is
+  set, passwords are never emailed.
+- **Why the PHP file:** the SMTP password can't be in the page itself; anyone
+  can view a page's source and would then be able to send email as you.
+
+### Installing
+
+1. Upload `dist/submit.php` to `public_html/handover/submit.php`.
+2. Create `handover-config.php` next to it (or one folder above
+   `public_html`) with your settings:
+
+   ```php
+   <?php return [
+       'smtp_user'    => 'your-smtp2go-username',
+       'smtp_pass'    => 'your-smtp2go-password',
+       'from_email'   => 'handover@sterlingit.com.au',   // verified sender domain in SMTP2GO
+       'to'           => ['support@sterlingit.com.au'],
+       'zip_password' => 'a-long-random-password',
+   ];
+   ```
+3. Paste the contents of `dist/handover-form.html` into the page.
+
+To change the questions, edit `src/schema.js` and run
+`node scripts/build-embed.js` (set `ENDPOINT` if `submit.php` lives somewhere
+other than `/handover/submit.php`).
+
+## How it works (server version)
 
 - **Customer link.** Create a private link in `/admin` (or let customers start
   from the home page). The link carries a secret token after the `#`, so it
